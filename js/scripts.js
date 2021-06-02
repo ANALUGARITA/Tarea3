@@ -30,7 +30,7 @@ var CartoDB_Positron = L.tileLayer(
     control_capas = L.control.layers(mapasBase).addTo(mapa);
 	
 // Control de escala
-    L.control.scale({ position: 'topright', imperial: false }).addTo(mapa);       
+    L.control.scale({ position: 'bottomright', imperial: false }).addTo(mapa);       
 
 // Capa WMS
 var capa_hillshade = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
@@ -105,7 +105,7 @@ $.getJSON('https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/canto
   control_capas.addOverlay(capa_cafe_coropletas, '% de terreno sembrado de cafe');	
 
   // Leyenda de la capa de coropletas
-  var leyenda = L.control({ position: 'bottomleft' })
+  var leyenda = L.control({ position: 'bottomright' })
   leyenda.onAdd = function (mapa) {
     var div = L.DomUtil.create('div', 'info legend')
     var limits = capa_cafe_coropletas.options.limits
