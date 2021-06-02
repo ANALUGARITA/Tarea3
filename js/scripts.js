@@ -88,8 +88,8 @@ $.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/viasc
 
 // Capa de coropletas de % de terreno sembrado de cafe en principales cantones cafetaleros 
 $.getJSON('https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/cantonescafe.geojson', function (geojson) {
-  var capa_cantones_cafe_coropletas = L.choropleth(geojson, {
-	  valueProperty: 'AreaCafe2',
+  var capa_cafe_coropletas = L.choropleth(geojson, {
+	  valueProperty: 'AreaCafe',
 	  scale: ['yellow', 'red'],
 	  steps: 5,
 	  mode: 'q',
@@ -99,17 +99,17 @@ $.getJSON('https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/canto
 	    fillOpacity: 0.40
 	  },
 	  onEachFeature: function (feature, layer) {
-	    layer.bindPopup('Cantón: ' + feature.properties.canton + '<br>' + 'Área sembrada de café: ' + feature.properties.AreaCafe2.toLocaleString() + '%')
+	    layer.bindPopup('Cantón: ' + feature.properties.canton + '<br>' + 'Área sembrada de café: ' + feature.properties.AreaCafe.toLocaleString() + '%')
 	  }
   }).addTo(mapa);
-  control_capas.addOverlay(capa_cantones_cafe_coropletas, '% de terreno sembrado de cafe');	
+  control_capas.addOverlay(capa_cafe_coropletas, '% de terreno sembrado de cafe');	
 
   // Leyenda de la capa de coropletas
   var leyenda = L.control({ position: 'bottomleft' })
   leyenda.onAdd = function (mapa) {
     var div = L.DomUtil.create('div', 'info legend')
-    var limits = capa_cantones_cafe_coropletas.options.limits
-    var colors = capa_cantones_cafe_coropletas.options.colors
+    var limits = capa_cafe_coropletas.options.limits
+    var colors = capa_cafe_coropletas.options.colors
     var labels = []
 
     // Add min & max
