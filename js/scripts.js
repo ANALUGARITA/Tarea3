@@ -42,7 +42,7 @@ var capa_hillshade = L.tileLayer.wms('http://ows.mundialis.de/services/service?'
 control_capas.addOverlay(capa_hillshade, 'Hillshade');
 
 //Raster con Overlay
-var capa_demcr = L.imageOverlay("capas/DEMCRclip.png", 
+var capa_demcr = L.imageOverlay("https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/DEMCRclip.png", 
 	[[11.2170149727014135, -87.0996182288391196], 
 	[5.5008697751917763, -82.5542497585302470]], 
     {opacity:0.5}
@@ -57,7 +57,7 @@ function updateOpacityDemcr() {
 
 
 // Capa vectorial en formato GeoJSON
-$.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/fincascafe.geojson", function(geodata) {
+$.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/fincascafe.geojson", function(geodata) {
   var capa_fincascafe = L.geoJson(geodata, {
     style: function(feature) {
 	  return {'color': "red", 'weight': 1.5, 'fillOpacity': 0.0, 'icon': iconoCiudad}
@@ -71,7 +71,7 @@ $.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/finca
   control_capas.addOverlay(capa_fincascafe, 'Fincas de Café');
  });
 
-$.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/viascafe.geojson", function(geodata) {
+$.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/viascafe.geojson", function(geodata) {
   var capa_viascafe = L.geoJson(geodata, {
     style: function(feature) {
 	  return {'color': "red", 'weight': 1.5, 'fillOpacity': 0.0}
@@ -86,26 +86,10 @@ $.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/viasc
 });
 
 
-
 // Capa de coropletas de % de terreno sembrado de cafe en principales cantones cafetaleros 
-$.getJSON("https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/cantonescafe.geojson", function(geodata) {
-  var capa_cantones = L.geoJson(geodata, {
-    style: function(feature) {
-	  return {'color': "black", 'weight': 1.5, 'fillOpacity': 0.0}
-    },
-    onEachFeature: function(feature, layer) {
-      var popupText = "<strong>Cantón</strong>: " + feature.properties.canton;
-      layer.bindPopup(popupText);
-    }			
-  }).addTo(mapa);
-
-  control_capas.addOverlay(capa_cantones, 'Cantones'); 
-});
-
-
-$.getJSON('"https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/cantonescafe.geojson', function (geojson) {
+$.getJSON('"https://raw.githubusercontent.com/ANALUGARITA/Tarea3/main/capas/cantonescafe.geojson', function (geojson) {
   var capa_cantones_cafe_coropletas = L.choropleth(geojson, {
-	  valueProperty: 'zonas_urb',
+	  valueProperty: 'AreaCafe',
 	  scale: ['yellow', 'brown'],
 	  steps: 5,
 	  mode: 'q',
@@ -115,7 +99,7 @@ $.getJSON('"https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/cant
 	    fillOpacity: 0.7
 	  },
 	  onEachFeature: function (feature, layer) {
-	    layer.bindPopup('Cantón: ' + feature.properties.canton + '<br>' + 'Área sembrada de café: ' + feature.properties.zonas_urb.toLocaleString() + '%')
+	    layer.bindPopup('Cantón: ' + feature.properties.canton + '<br>' + 'Área sembrada de café: ' + feature.properties.AreaCafe.toLocaleString() + '%')
 	  }
   }).addTo(mapa);
   control_capas.addOverlay(capa_cantones_cafe_coropletas, '% de terreno sembrado de cafe en principales cantones cafetaleros');	
@@ -124,8 +108,8 @@ $.getJSON('"https://raw.githubusercontent.com/ANALUGARITA/Tarea2/main/capas/cant
   var leyenda = L.control({ position: 'bottomright' })
   leyenda.onAdd = function (mapa) {
     var div = L.DomUtil.create('div', 'info legend')
-    var limits = capa_cantones_gam_coropletas.options.limits
-    var colors = capa_cantones_gam_coropletas.options.colors
+    var limits = capa_cantones_cafe_coropletas.options.limits
+    var colors = capa_cantones_cafe_coropletas.options.colors
     var labels = []
 
     // Add min & max
