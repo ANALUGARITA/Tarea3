@@ -1,0 +1,11 @@
+  #mapid { 
+    height: 520px;
+    width: 100%;
+    box-shadow: 5px 5px 5px #888;
+    border: 1px solid #BFBFBF;
+ }
+
+.estiloIconos {
+  color: red;
+}
+
